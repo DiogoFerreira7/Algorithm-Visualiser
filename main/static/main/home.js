@@ -5,7 +5,7 @@ class Node {
         this.wall = false;
         this.start = false;
         this.end = false;
-        this.div = $(`row-${this.row} column-${this.column}`);
+        this.div = $(`.row-${this.row}-column-${this.column}`);
     }
 }
 
@@ -25,9 +25,9 @@ class Grid {
         for (let i = 0; i < this.rowNodes; i++ ) {
             let temporary_array = [];
             for (let j = 0; j < this.columnNodes; j++) {
+                this.container.append(`<div class='node row-${i}-column-${j}'></div>`);
                 let node = new Node(i, j);
                 temporary_array.push(node);
-                this.container.append(`<div class='node row-${i}-column-${j}'></div>`);
             }
             this.board.push(temporary_array);
         }
@@ -48,14 +48,11 @@ class Grid {
     }
 
     setStart() {
-        $(".row-2-column-2").addClass("start-node")
-        // $(`row-${this.start_node.row}-column-${this.start_node.column}`).css("background-color", "black");
-        // this.start_node.div.addClass('start-node');
+        this.start_node.div.addClass("start-node");
     }
 
     setEnd() {
-        $(".row-13-column-29").addClass("end-node")
-        // this.end_node.div.addClass('end-node');
+        this.end_node.div.addClass("end-node");
     }
 }
 
