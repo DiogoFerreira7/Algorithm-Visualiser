@@ -8,3 +8,26 @@
     padding-top: 0.9rem;
     padding-bottom: 0.9rem;
 }
+
+/* Grid Code Below (Make a template with CSS above later) */
+/* Grid */
+.grid {
+    width: 1600px;
+    height: 800px;
+    margin: 30px auto 0;
+}
+
+.node {
+    outline: 1px solid #555;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.start-node {
+    background-color: greenyellow;
+}
+
+.end-node {
+    background-color: red;
+}
