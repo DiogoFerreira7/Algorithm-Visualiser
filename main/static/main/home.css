@@ -24,6 +24,10 @@
     padding: 0;
 }
 
+.wall {
+    background-color: black;
+}
+
 .start-node {
     background-color: rgb(102, 255, 166);
 }

@@ -40,22 +40,65 @@ class Grid {
     initialiseBoard() {
         this.start_node = this.board[2][2];
         this.end_node = this.board[13][29];
-        // Check if this is needed later
-        this.start_node.start = true;
-        this.end_node.end = true;
         this.setStart();
         this.setEnd();
     }
 
+    changeToWall(node) {
+        if ($(node).hasClass("wall")) {
+            $(node).removeClass('wall');
+        } else {
+            $(node).addClass('wall');
+        }
+    }
+
+    // Setters for board attributes
+    setWall(node) {
+        node.wall = true;
+        node.div.addClass("wall");
+    }
+
+    // Change setStart and setEnd later to have a given node passed in after dragging works
     setStart() {
+        this.start_node.start = true;
         this.start_node.div.addClass("start-node");
     }
 
     setEnd() {
+        this.end_node.end = true;
         this.end_node.div.addClass("end-node");
+    }
+
+    // Maze Generation
+    randomGridGenerator() {
+        for (let i = 0; i < this.rowNodes; i++ ) {
+            for (let j = 0; j < this.columnNodes; j++) {
+                if (Math.random() > 0.75) {
+                    this.setWall(this.board[i][j]);
+                }
+            }
+        }
     }
 }
 
-// Check $(document).ready(function {}) is needed
-let grid = new Grid();
-grid.createGrid();
+// Executes when the document is ready
+$(document).ready(function() {
+    let grid = new Grid();
+    grid.createGrid();
+
+    // Event Listeners
+
+    // Manual Maze Creation Mode
+    $(".node").mousedown(function() {
+        grid.changeToWall(this);
+    });
+
+    // Random Maze Generator
+    // For the maze generators call the grid reset first (make the manual grid reset too)
+    $(".random-maze-generator").click(function() {
+        grid.randomGridGenerator();
+    });
+});
+
+// Make sure to set both the Node attributes and div element classes in the setters so they never misalign
+// When making setters just make sure they all change class attributes and html classes
