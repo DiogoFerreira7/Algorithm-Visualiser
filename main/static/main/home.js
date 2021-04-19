@@ -10,12 +10,13 @@ class Node {
 }
 
 class Grid {
-    constructor() {
+    constructor(gridRatio) {
+        this.gridRatio = gridRatio;
         this.container = $(".grid");
         this.gridWidth = 1600;
         this.gridHeight = 800;
-        this.rowNodes = 16;
-        this.columnNodes = 32;
+        this.rowNodes = this.gridRatio * 8;
+        this.columnNodes = this.gridRatio * 16;
         this.board = [];
         this.start_node = null;
         this.end_node = null;
@@ -83,7 +84,7 @@ class Grid {
 
 // Executes when the document is ready
 $(document).ready(function() {
-    let grid = new Grid();
+    let grid = new Grid($(".grid-ratio").val());
     grid.createGrid();
 
     // Event Listeners
@@ -98,6 +99,11 @@ $(document).ready(function() {
     $(".random-maze-generator").click(function() {
         grid.randomGridGenerator();
     });
+
+    // Grid size selector when button is pressed if different
+    // $(".grid-ratio").on("input", function() {
+    //     console.log(this.value);
+    // });
 });
 
 // Make sure to set both the Node attributes and div element classes in the setters so they never misalign

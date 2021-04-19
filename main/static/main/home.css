@@ -35,3 +35,9 @@
 .end-node {
     background-color: red;
 }
+
+/* Grid Size Selector */
+.grid-size-selector {
+    margin: 10px auto;
+    width: 500px;
+}
