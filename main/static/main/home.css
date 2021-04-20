@@ -9,6 +9,10 @@
     padding-bottom: 0.9rem;
 }
 
+.navbar-buttons {
+    margin-right: 15px;
+}
+
 /* Grid Code Below (Make a template with CSS above later) */
 /* Grid */
 .grid {

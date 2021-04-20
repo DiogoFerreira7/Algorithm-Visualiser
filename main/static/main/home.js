@@ -74,9 +74,22 @@ class Grid {
     randomGridGenerator() {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
-                if (Math.random() > 0.75) {
+                if (Math.random() > 0.7) {
                     this.setWall(this.board[i][j]);
                 }
+            }
+        }
+    }
+
+    clearNode(node) {
+        node.wall = false;
+        node.div.removeClass("wall");
+    }
+
+    clearGrid() {
+        for (let i = 0; i < this.rowNodes; i++ ) {
+            for (let j = 0; j < this.columnNodes; j++) {
+                this.clearNode(this.board[i][j]);
             }
         }
     }
@@ -97,13 +110,15 @@ $(document).ready(function() {
     // Random Maze Generator
     // For the maze generators call the grid reset first (make the manual grid reset too)
     $(".random-maze-generator").click(function() {
+        grid.clearGrid();
         grid.randomGridGenerator();
     });
 
+    $(".clear-grid-button").click(function() {
+        grid.clearGrid();
+    });
+    
     // Grid size selector when button is pressed if different
-    // $(".grid-ratio").on("input", function() {
-    //     console.log(this.value);
-    // });
 });
 
 // Make sure to set both the Node attributes and div element classes in the setters so they never misalign
