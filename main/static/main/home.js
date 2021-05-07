@@ -46,7 +46,6 @@ class Grid {
         this.setEnd();
     }
 
-    // gets the actual Node class of each div if the div is input and class is needed to change wall
     getNode(node) {
         let [i, j] = node.className.match(/\d+/g);
         return this.board[i][j];
@@ -73,13 +72,20 @@ class Grid {
         this.end_node.div.addClass("end-node");
     }
 
-    // Maze Generation
     randomGridGenerator() {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
                 if (Math.random() > 0.7) {
                     this.changeToWall(this.board[i][j]);
                 }
+            }
+        }
+    }
+
+    invertGrid() {
+        for (let i = 0; i < this.rowNodes; i++ ) {
+            for (let j = 0; j < this.columnNodes; j++) {
+                this.changeToWall(this.board[i][j]);
             }
         }
     }
@@ -98,27 +104,26 @@ class Grid {
     }
 }
 
-// Executes when the document is ready
 $(document).ready(function() {
     let grid = new Grid($(".grid-ratio").val());
     grid.createGrid();
     
     // Event Listeners
-    // Manual Maze Creation Mode
     gridEditor(grid);
     
-    // Random Maze Generator
-    // For the maze generators call the grid reset first (make the manual grid reset too)
     $(".random-maze-generator").click(function() {
         grid.clearGrid();
         grid.randomGridGenerator();
     });
-    
+
+    $(".invert-grid").click(function() {
+        grid.invertGrid();
+    });
+
     $(".clear-grid-button").click(function() {
         grid.clearGrid();
     });
 
-    // Grid size selector when button is pressed if different
     $(".grid-size-button").click(function() {
         let gridRatio = $(".grid-ratio").val();
         if (gridRatio != grid.gridRatio) {
@@ -126,22 +131,23 @@ $(document).ready(function() {
             grid = new Grid(gridRatio);
             grid.createGrid();
             
-            // Manual Maze Creation Mode
             gridEditor(grid);
         }
     });
 });
 
-// Make sure to set both the Node attributes and div element classes in the setters so they never misalign
-// When making setters just make sure they all change class attributes and html classes
-
 function gridEditor(grid) {
+    let mouse_is_down = false
     $(".node").mousedown(function() {
         grid.changeToWall(grid.getNode(this));
+        mouse_is_down = true;
+    }).mouseup(function() {
+        mouse_is_down = false;
     });
-    // $(".node").mousedown(function() {
-    //     $('.node').hover(function() {
-    //         grid.changeToWall(this);
-    //     })
-    // });
+
+    $(".node").mouseenter(function() {
+        if (mouse_is_down) {
+            grid.changeToWall(grid.getNode(this));
+        }
+    })
 }
