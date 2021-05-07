@@ -12,7 +12,7 @@ class Node {
 class Grid {
     constructor(gridRatio) {
         this.gridRatio = gridRatio;
-        this.container = $(".grid");
+        this.container = $(".main");
         this.gridWidth = 1600;
         this.gridHeight = 800;
         this.rowNodes = this.gridRatio * 8;
@@ -23,10 +23,11 @@ class Grid {
     }
 
     createGrid() {
+        this.container.append("<div class='grid'></div>")
         for (let i = 0; i < this.rowNodes; i++ ) {
             let temporary_array = [];
             for (let j = 0; j < this.columnNodes; j++) {
-                this.container.append(`<div class='node row-${i}-column-${j}'></div>`);
+                $(".grid").append(`<div class='node row-${i}-column-${j}'></div>`);
                 let node = new Node(i, j);
                 temporary_array.push(node);
             }
@@ -40,23 +41,25 @@ class Grid {
 
     initialiseBoard() {
         this.start_node = this.board[2][2];
-        this.end_node = this.board[13][29];
+        this.end_node = this.board[this.rowNodes-3][this.columnNodes-3];
         this.setStart();
         this.setEnd();
     }
 
-    changeToWall(node) {
-        if ($(node).hasClass("wall")) {
-            $(node).removeClass('wall');
-        } else {
-            $(node).addClass('wall');
-        }
+    // gets the actual Node class of each div if the div is input and class is needed to change wall
+    getNode(node) {
+        let [i, j] = node.className.match(/\d+/g);
+        return this.board[i][j];
     }
 
-    // Setters for board attributes
-    setWall(node) {
-        node.wall = true;
-        node.div.addClass("wall");
+    changeToWall(node) {
+        if (node.wall == true) {
+            node.wall = false;
+            node.div.removeClass("wall");
+        } else {
+            node.wall = true;
+            node.div.addClass("wall");
+        }
     }
 
     // Change setStart and setEnd later to have a given node passed in after dragging works
@@ -75,15 +78,10 @@ class Grid {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
                 if (Math.random() > 0.7) {
-                    this.setWall(this.board[i][j]);
+                    this.changeToWall(this.board[i][j]);
                 }
             }
         }
-    }
-
-    clearNode(node) {
-        node.wall = false;
-        node.div.removeClass("wall");
     }
 
     clearGrid() {
@@ -93,33 +91,57 @@ class Grid {
             }
         }
     }
+
+    clearNode(node) {
+        node.wall = false;
+        node.div.removeClass("wall");
+    }
 }
 
 // Executes when the document is ready
 $(document).ready(function() {
     let grid = new Grid($(".grid-ratio").val());
     grid.createGrid();
-
+    
     // Event Listeners
-
     // Manual Maze Creation Mode
-    $(".node").mousedown(function() {
-        grid.changeToWall(this);
-    });
-
+    gridEditor(grid);
+    
     // Random Maze Generator
     // For the maze generators call the grid reset first (make the manual grid reset too)
     $(".random-maze-generator").click(function() {
         grid.clearGrid();
         grid.randomGridGenerator();
     });
-
+    
     $(".clear-grid-button").click(function() {
         grid.clearGrid();
     });
-    
+
     // Grid size selector when button is pressed if different
+    $(".grid-size-button").click(function() {
+        let gridRatio = $(".grid-ratio").val();
+        if (gridRatio != grid.gridRatio) {
+            $(".grid").remove();
+            grid = new Grid(gridRatio);
+            grid.createGrid();
+            
+            // Manual Maze Creation Mode
+            gridEditor(grid);
+        }
+    });
 });
 
 // Make sure to set both the Node attributes and div element classes in the setters so they never misalign
 // When making setters just make sure they all change class attributes and html classes
+
+function gridEditor(grid) {
+    $(".node").mousedown(function() {
+        grid.changeToWall(grid.getNode(this));
+    });
+    // $(".node").mousedown(function() {
+    //     $('.node').hover(function() {
+    //         grid.changeToWall(this);
+    //     })
+    // });
+}
