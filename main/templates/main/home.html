@@ -24,7 +24,7 @@
                                 Algorithm
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Djikstra's</a></li>
+                                <li><a class="dijkstra dropdown-item" href="#">Djikstra's</a></li>
                                 <li><a class="dropdown-item" href="#">A Star</a></li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
@@ -69,6 +69,8 @@
         <!-- JQuery JavaScript -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!-- JavaScript -->
-        <script src="{% static 'main/home.js' %}"></script>
+        <script src="{% static 'main/animations.js' %}" type="module"></script>
+        <script src="{% static 'main/dijkstra.js' %}" type="module"></script>
+        <script src="{% static 'main/home.js' %}" type="module"></script>
     </body>
 </html>

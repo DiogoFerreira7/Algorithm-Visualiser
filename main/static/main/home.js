@@ -1,3 +1,6 @@
+import {Dijkstra} from './dijkstra.js';
+import {Animations} from './animations.js';
+
 class Node {
     constructor(row, column) {
         this.row = row;
@@ -5,12 +8,13 @@ class Node {
         this.wall = false;
         this.start = false;
         this.end = false;
+        this.traversed = false;
         this.div = $(`.row-${this.row}-column-${this.column}`);
     }
 }
 
 class Grid {
-    constructor(gridRatio) {
+    constructor(gridRatio, animator) {
         this.gridRatio = gridRatio;
         this.container = $(".main");
         this.gridWidth = 1600;
@@ -20,6 +24,7 @@ class Grid {
         this.board = [];
         this.start_node = null;
         this.end_node = null;
+        this.animator = new Animations();
     }
 
     createGrid() {
@@ -36,14 +41,19 @@ class Grid {
         $(".node").width(this.gridWidth/this.columnNodes);
         $(".node").height(this.gridHeight/this.rowNodes);
 
-        this.initialiseBoard();
+        // Initialises the start and end of the board
+        this.setStart(this.board[2][2]);
+        this.setEnd(this.board[this.rowNodes-3][this.columnNodes-3]);
     }
 
-    initialiseBoard() {
-        this.start_node = this.board[2][2];
-        this.end_node = this.board[this.rowNodes-3][this.columnNodes-3];
-        this.setStart();
-        this.setEnd();
+    setStart(node) {
+        this.start_node = node;
+        this.animator.setStartAnimation(node);
+    }
+
+    setEnd(node) {
+        this.end_node = node;
+        this.animator.setEndAnimation(node);
     }
 
     getNode(node) {
@@ -51,32 +61,11 @@ class Grid {
         return this.board[i][j];
     }
 
-    changeToWall(node) {
-        if (node.wall == true) {
-            node.wall = false;
-            node.div.removeClass("wall");
-        } else {
-            node.wall = true;
-            node.div.addClass("wall");
-        }
-    }
-
-    // Change setStart and setEnd later to have a given node passed in after dragging works
-    setStart() {
-        this.start_node.start = true;
-        this.start_node.div.addClass("start-node");
-    }
-
-    setEnd() {
-        this.end_node.end = true;
-        this.end_node.div.addClass("end-node");
-    }
-
     randomGridGenerator() {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
                 if (Math.random() > 0.7) {
-                    this.changeToWall(this.board[i][j]);
+                    this.animator.changeToWall(this.board[i][j]);
                 }
             }
         }
@@ -85,7 +74,7 @@ class Grid {
     invertGrid() {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
-                this.changeToWall(this.board[i][j]);
+                this.animator.changeToWall(this.board[i][j]);
             }
         }
     }
@@ -93,14 +82,9 @@ class Grid {
     clearGrid() {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
-                this.clearNode(this.board[i][j]);
+                this.animator.clearNode(this.board[i][j]);
             }
         }
-    }
-
-    clearNode(node) {
-        node.wall = false;
-        node.div.removeClass("wall");
     }
 }
 
@@ -110,6 +94,10 @@ $(document).ready(function() {
     
     // Event Listeners
     gridEditor(grid);
+
+    $(".dijkstra").click(function() {
+        let dijkstra = new Dijkstra(grid.start_node, grid.end_node, grid.board);
+    })
     
     $(".random-maze-generator").click(function() {
         grid.clearGrid();
@@ -130,7 +118,6 @@ $(document).ready(function() {
             $(".grid").remove();
             grid = new Grid(gridRatio);
             grid.createGrid();
-            
             gridEditor(grid);
         }
     });
@@ -139,7 +126,7 @@ $(document).ready(function() {
 function gridEditor(grid) {
     let mouse_is_down = false
     $(".node").mousedown(function() {
-        grid.changeToWall(grid.getNode(this));
+        grid.animator.changeToWall(grid.getNode(this));
         mouse_is_down = true;
     }).mouseup(function() {
         mouse_is_down = false;
@@ -147,7 +134,7 @@ function gridEditor(grid) {
 
     $(".node").mouseenter(function() {
         if (mouse_is_down) {
-            grid.changeToWall(grid.getNode(this));
+            grid.animator.changeToWall(grid.getNode(this));
         }
     })
 }
