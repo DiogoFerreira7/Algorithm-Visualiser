@@ -46,14 +46,24 @@ class Grid {
         this.setEnd(this.board[this.rowNodes-3][this.columnNodes-3]);
     }
 
-    setStart(node) {
-        this.start_node = node;
-        this.animator.setStartAnimation(node);
+    setStart(newNode, originalNode = null) {
+        console.log(newNode, originalNode);
+        if (originalNode) {
+            this.animator.removeStartAnimation(originalNode);
+        }
+
+        // set new grid class start node to the new node
+        this.start_node = newNode;
+        this.animator.setStartAnimation(newNode);
     }
 
-    setEnd(node) {
-        this.end_node = node;
-        this.animator.setEndAnimation(node);
+    setEnd(newNode, originalNode = null) {
+        if (originalNode) {
+            this.animator.removeEndAnimation(originalNode);
+        }
+
+        this.end_node = newNode;
+        this.animator.setEndAnimation(newNode);
     }
 
     getNode(node) {
@@ -89,16 +99,19 @@ class Grid {
 }
 
 $(document).ready(function() {
+    // Grid Initialisation
     let grid = new Grid($(".grid-ratio").val());
     grid.createGrid();
     
-    // Event Listeners
+    // Mouse Event Listeners
     gridEditor(grid);
 
+    // Algorithms
     $(".dijkstra").click(function() {
         let dijkstra = new Dijkstra(grid.start_node, grid.end_node, grid.board);
     })
     
+    // Maze Generation
     $(".random-maze-generator").click(function() {
         grid.clearGrid();
         grid.randomGridGenerator();
@@ -108,6 +121,7 @@ $(document).ready(function() {
         grid.invertGrid();
     });
 
+    // Controls
     $(".clear-grid-button").click(function() {
         grid.clearGrid();
     });
@@ -124,17 +138,36 @@ $(document).ready(function() {
 });
 
 function gridEditor(grid) {
-    let mouse_is_down = false
+    // Mouse Event Listeners
+    let mouseIsDown = false
+    let startIsDragging = false
+    let endIsDragging = false
     $(".node").mousedown(function() {
-        grid.animator.changeToWall(grid.getNode(this));
-        mouse_is_down = true;
+        let node = grid.getNode(this);
+        if (node.start === true) {
+            startIsDragging = true;
+        } else if (node.end === true) {
+            endIsDragging = true;
+        } else {
+            grid.animator.changeToWall(node);
+            mouseIsDown = true;
+        }
     }).mouseup(function() {
-        mouse_is_down = false;
+        startIsDragging = false;
+        endIsDragging = false;
+        mouseIsDown = false;
     });
 
     $(".node").mouseenter(function() {
-        if (mouse_is_down) {
+        let node = grid.getNode(this);
+        if (startIsDragging) {
+            grid.setStart(node, grid.start_node);
+        } else if (endIsDragging) {
+            grid.setEnd(node, grid.end_node);
+        } else if (mouseIsDown) {
             grid.animator.changeToWall(grid.getNode(this));
         }
     })
+
+    // Start and End Node event listeners
 }

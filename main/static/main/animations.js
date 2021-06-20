@@ -14,15 +14,28 @@ export class Animations {
             node.div.addClass("wall");
         }
     }
-    
+
     setStartAnimation(node) {
         node.start = true;
+        this.clearNode(node);
         node.div.addClass("start-node");
+
+    }
+
+    removeStartAnimation(node) {
+        node.start = false;
+        node.div.removeClass("start-node");
     }
 
     setEndAnimation(node) {
         node.end = true;
+        this.clearNode(node);
         node.div.addClass("end-node");
+    }
+
+    removeEndAnimation(node) {
+        node.end = false;
+        node.div.removeClass("end-node");
     }
     
 }
