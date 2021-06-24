@@ -5,6 +5,7 @@ export class Animations {
         node.div.removeClass("wall");
     }
     
+    // Change to 2 separate ones maybe if it works
     changeToWall(node) {
         if (node.wall == true) {
             node.wall = false;
@@ -36,6 +37,16 @@ export class Animations {
     removeEndAnimation(node) {
         node.end = false;
         node.div.removeClass("end-node");
+    }
+
+    setTraversed(node) {
+        node.traversed = true;
+        node.div.addClass("traversed");
+    }
+
+    removeTraversed(node) {
+        node.traversed = false;
+        node.div.removeClass("traversed");
     }
     
 }

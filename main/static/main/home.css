@@ -39,6 +39,9 @@
 .end-node {
     background-color: red;
 }
+.traversed {
+    background-color: blue;
+}
 
 /* Grid Size Selector */
 .grid-size-selector {
