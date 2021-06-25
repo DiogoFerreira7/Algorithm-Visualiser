@@ -40,7 +40,11 @@
     background-color: red;
 }
 .traversed {
-    background-color: blue;
+    background-color: cyan;
+}
+
+.path {
+    background-color: yellow;
 }
 
 /* Grid Size Selector */

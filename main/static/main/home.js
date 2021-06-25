@@ -11,6 +11,7 @@ class Node {
         this.start = false;
         this.end = false;
         this.traversed = false;
+        this.path = false;
         this.neighbours = [];
         this.div = $(`.row-${this.row}-column-${this.column}`);
     }
@@ -127,8 +128,12 @@ class Grid {
     clearGrid() {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
-                this.animator.clearNode(this.board[i][j]);
-                this.animator.removeTraversed(this.board[i][j]);
+                let node = this.board[i][j];
+                this.animator.clearNode(node);
+                this.animator.removeTraversed(node);
+                if (node.path) {
+                    this.animator.removePath(node);
+                }
             }
         }
     }
@@ -136,7 +141,11 @@ class Grid {
     clearPath() {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
-                this.animator.removeTraversed(this.board[i][j]);
+                let node = this.board[i][j];
+                this.animator.removeTraversed(node);
+                if (node.path) {
+                    this.animator.removePath(node);
+                }
             }
         }
     }
@@ -191,6 +200,7 @@ function gridEditor(grid) {
     let mouseIsDown = false
     let startIsDragging = false
     let endIsDragging = false
+
     $(".node").mousedown(function() {
         let node = grid.getNode(this);
         if (node.start === true) {
@@ -210,6 +220,7 @@ function gridEditor(grid) {
     // Start and End Node event listeners
     $(".node").mouseenter(function() {
         let node = grid.getNode(this);
+
         if (startIsDragging && (node.end === false)) {
             grid.setStart(node, grid.start_node);
         } else if (endIsDragging && (node.start == false)) {

@@ -48,5 +48,17 @@ export class Animations {
         node.traversed = false;
         node.div.removeClass("traversed");
     }
+
+    tracePath(path) {
+        path.forEach((node) => {
+            node.path = true;
+            node.div.addClass("path");
+        })
+    }
+
+    removePath(node) {
+        node.path = false;
+        node.div.removeClass("path");
+    }
     
 }
