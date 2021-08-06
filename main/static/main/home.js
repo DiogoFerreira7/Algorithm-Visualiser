@@ -1,6 +1,7 @@
 import {Animations} from './animations.js';
 import {Dijkstra} from './algorithms/dijkstra.js';
 import {BFS} from './algorithms/bfs.js';
+import {DFS} from './algorithms/dfs.js';
 
 
 class Node {
@@ -18,7 +19,7 @@ class Node {
 }
 
 class Grid {
-    constructor(gridRatio, animator) {
+    constructor(gridRatio) {
         this.gridRatio = gridRatio;
         this.container = $(".main");
         this.gridWidth = 1600;
@@ -29,6 +30,7 @@ class Grid {
         this.start_node = null;
         this.end_node = null;
         this.animator = new Animations();
+        this.randomGenerationDensity = 0.5;
     }
 
     createGrid() {
@@ -108,7 +110,7 @@ class Grid {
     randomGridGenerator() {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
-                if (Math.random() > 0.7) {
+                if (Math.random() < this.randomGenerationDensity) {
                     if (this.board[i][j].end != true) {
                         this.animator.changeToWall(this.board[i][j]);
                     }
@@ -154,6 +156,7 @@ class Grid {
 $(document).ready(function() {
     // Grid Initialisation
     let grid = new Grid($(".grid-ratio").val());
+    var algorithm = null;
     grid.createGrid();
     
     // Mouse Event Listeners
@@ -161,15 +164,37 @@ $(document).ready(function() {
 
     // Algorithms
     $(".dijkstra").click(function() {
-        let algorithm = new BFS(grid);
-        algorithm.visualise();
+        console.log("not working yet");
+        // let algorithm = new BFS(grid);
+        // algorithm.visualise();
+        $(".visualise").html("Run Dijkstra");
     })
-    
+
+    $(".bfs").click(function() {
+        algorithm = new BFS(grid);
+        $(".visualise").html("Run BFS");
+    })
+
+    $(".dfs").click(function() {
+        algorithm = new DFS(grid);
+        $(".visualise").html("Run DFS");
+    })
+
+    $(".visualise").click(function() {
+        if (algorithm) {
+            algorithm.visualise();
+        }
+    })
+
     // Maze Generation
     $(".random-maze-generator").click(function() {
         grid.clearGrid();
         grid.randomGridGenerator();
     });
+
+    $(".density-input-button").click(function() {
+        grid.randomGenerationDensity = $(".generation-density").val();
+    })
 
     $(".invert-grid").click(function() {
         grid.invertGrid();
@@ -229,6 +254,5 @@ function gridEditor(grid) {
             grid.animator.changeToWall(grid.getNode(this));
         }
     })
-
 
 }

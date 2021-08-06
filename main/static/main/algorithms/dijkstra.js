@@ -1,16 +1,25 @@
+import {Animations} from '../animations.js';
+
 export class Dijkstra {
 
-    constructor(start, end, grid) {
-        this.start_node = start;
-        this.end_node = end;
+    constructor(grid) {
+        this.animator = new Animations();
         this.grid = grid;
-
+        this.start_node = grid.start_node;
+        this.end_node = grid.end_node;
     }
 
-    test() {
-        console.log(this.grid);
-        console.log(this.end_node);
-        console.log(this.start_node);
+    visualise() {
+        this.dijkstra();
+    }
+
+    sleep(time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
     }
     
+    async dijkstra() {
+
+        await this.sleep(10);
+    }
+
 }

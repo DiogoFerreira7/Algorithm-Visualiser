@@ -13,6 +13,11 @@
     margin-right: 15px;
 }
 
+.random-maze-settings-icon {
+    width: 32;
+    height: 32;
+}
+
 /* Grid Code Below (Make a template with CSS above later) */
 /* Grid */
 .grid {
