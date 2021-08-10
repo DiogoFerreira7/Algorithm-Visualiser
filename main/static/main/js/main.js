@@ -1,10 +1,6 @@
 import {Animations} from './animations.js';
-import {Dijkstra} from './algorithms/dijkstra.js';
-import {BFS} from './algorithms/bfs.js';
-import {DFS} from './algorithms/dfs.js';
 
-
-class Node {
+export class Node {
     constructor(row, column) {
         this.row = row;
         this.column = column;
@@ -18,7 +14,7 @@ class Node {
     }
 }
 
-class Grid {
+export class Grid {
     constructor(gridRatio) {
         this.gridRatio = gridRatio;
         this.container = $(".main");
@@ -27,8 +23,8 @@ class Grid {
         this.rowNodes = this.gridRatio * 8;
         this.columnNodes = this.gridRatio * 16;
         this.board = [];
-        this.start_node = null;
-        this.end_node = null;
+        this.startNode = null;
+        this.endNode = null;
         this.animator = new Animations();
         this.randomGenerationDensity = 0.5;
     }
@@ -55,6 +51,7 @@ class Grid {
         this.setStart(this.board[2][2]);
         this.setEnd(this.board[this.rowNodes-3][this.columnNodes-3]);
         
+        this.clearGrid();
 
         // Gets the neighbours for all of the grid elements
         for (let i = 0; i < this.rowNodes; i++ ) {
@@ -62,15 +59,17 @@ class Grid {
                 this.getNeighbours(this.board[i][j]);
             }
         }
+
     }
 
     setStart(newNode, originalNode = null) {
+        // console.log(this.originalNode.start);
         if (originalNode) {
             this.animator.removeStartAnimation(originalNode);
         }
 
         // set new grid class start node to the new node
-        this.start_node = newNode;
+        this.startNode = newNode;
         this.animator.setStartAnimation(newNode);
     }
 
@@ -79,7 +78,7 @@ class Grid {
             this.animator.removeEndAnimation(originalNode);
         }
 
-        this.end_node = newNode;
+        this.endNode = newNode;
         this.animator.setEndAnimation(newNode);
     }
 
@@ -111,9 +110,7 @@ class Grid {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
                 if (Math.random() < this.randomGenerationDensity) {
-                    if (this.board[i][j].end != true) {
-                        this.animator.changeToWall(this.board[i][j]);
-                    }
+                    this.animator.changeToWall(this.board[i][j]);
                 }
             }
         }
@@ -131,10 +128,16 @@ class Grid {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
                 let node = this.board[i][j];
-                this.animator.clearNode(node);
-                this.animator.removeTraversed(node);
-                if (node.path) {
-                    this.animator.removePath(node);
+                if ((node.start) || (node.end)) {
+                    node.traversed = false;
+                } else {
+                    this.animator.clearNode(node);
+                    if (node.traversed) {
+                        this.animator.removeTraversed(node);
+                    }
+                    if (node.path) {
+                        this.animator.removePath(node);
+                    }
                 }
             }
         }
@@ -144,7 +147,13 @@ class Grid {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
                 let node = this.board[i][j];
-                this.animator.removeTraversed(node);
+                // Checking traversed nodes - has to remove traversed from start and end nodes so they can run
+                if ((node.start) || (node.end)) {
+                    node.traversed = false;
+                } else if (node.traversed) {
+                //  && (node.start !== true) && (node.end !== true)) {
+                    this.animator.removeTraversed(node);
+                }
                 if (node.path) {
                     this.animator.removePath(node);
                 }
@@ -153,106 +162,3 @@ class Grid {
     }
 }
 
-$(document).ready(function() {
-    // Grid Initialisation
-    let grid = new Grid($(".grid-ratio").val());
-    var algorithm = null;
-    grid.createGrid();
-    
-    // Mouse Event Listeners
-    gridEditor(grid);
-
-    // Algorithms
-    $(".dijkstra").click(function() {
-        console.log("not working yet");
-        // let algorithm = new BFS(grid);
-        // algorithm.visualise();
-        $(".visualise").html("Run Dijkstra");
-    })
-
-    $(".bfs").click(function() {
-        algorithm = new BFS(grid);
-        $(".visualise").html("Run BFS");
-    })
-
-    $(".dfs").click(function() {
-        algorithm = new DFS(grid);
-        $(".visualise").html("Run DFS");
-    })
-
-    $(".visualise").click(function() {
-        if (algorithm) {
-            algorithm.visualise();
-        }
-    })
-
-    // Maze Generation
-    $(".random-maze-generator").click(function() {
-        grid.clearGrid();
-        grid.randomGridGenerator();
-    });
-
-    $(".density-input-button").click(function() {
-        grid.randomGenerationDensity = $(".generation-density").val();
-    })
-
-    $(".invert-grid").click(function() {
-        grid.invertGrid();
-    });
-
-    // Controls
-    $(".clear-grid-button").click(function() {
-        grid.clearGrid();
-    });
-
-    $(".clear-path-button").click(function() {
-        grid.clearPath();
-    });
-
-    $(".grid-size-button").click(function() {
-        let gridRatio = $(".grid-ratio").val();
-        if (gridRatio != grid.gridRatio) {
-            $(".grid").remove();
-            grid = new Grid(gridRatio);
-            grid.createGrid();
-            gridEditor(grid);
-        }
-    });
-});
-
-function gridEditor(grid) {
-    // Mouse Event Listeners
-    let mouseIsDown = false
-    let startIsDragging = false
-    let endIsDragging = false
-
-    $(".node").mousedown(function() {
-        let node = grid.getNode(this);
-        if (node.start === true) {
-            startIsDragging = true;
-        } else if (node.end === true) {
-            endIsDragging = true;
-        } else {
-            grid.animator.changeToWall(node);
-            mouseIsDown = true;
-        }
-    }).mouseup(function() {
-        startIsDragging = false;
-        endIsDragging = false;
-        mouseIsDown = false;
-    });
-
-    // Start and End Node event listeners
-    $(".node").mouseenter(function() {
-        let node = grid.getNode(this);
-
-        if (startIsDragging && (node.end === false)) {
-            grid.setStart(node, grid.start_node);
-        } else if (endIsDragging && (node.start == false)) {
-            grid.setEnd(node, grid.end_node);
-        } else if (mouseIsDown) {
-            grid.animator.changeToWall(grid.getNode(this));
-        }
-    })
-
-}

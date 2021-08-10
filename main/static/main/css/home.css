@@ -18,6 +18,21 @@
     height: 32;
 }
 
+.colour-picking-node {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+}
+
+.colour-section {
+    margin: 10px auto 0px;
+    padding-left: 10px;
+}
+
+.colour-section-label {
+    margin: auto 2vw;
+}
+
 /* Grid Code Below (Make a template with CSS above later) */
 /* Grid */
 .grid {
@@ -31,25 +46,6 @@
     display: inline-block;
     margin: 0;
     padding: 0;
-}
-
-.wall {
-    background-color: black;
-}
-
-.start-node {
-    background-color: rgb(102, 255, 166);
-}
-
-.end-node {
-    background-color: red;
-}
-.traversed {
-    background-color: cyan;
-}
-
-.path {
-    background-color: yellow;
 }
 
 /* Grid Size Selector */

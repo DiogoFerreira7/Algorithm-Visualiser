@@ -1,20 +1,20 @@
-import {Animations} from '../animations.js';
+import {Animations} from '../../js/animations.js';
 
-export class BFS {
+export class DFS {
 
     constructor(grid) {
         this.animator = new Animations();
+        this.startNode = grid.startNode;
+        this.endNode = grid.endNode;
         this.grid = grid;
-        this.start_node = grid.start_node;
-        this.end_node = grid.end_node;
         this.queue = [];
         this.previous_map = new Map();
-        this.previous_node = this.start_node;
+        this.previous_node = this.startNode;
     }
 
     visualise() {
         // visualise allows to call visualise for all algorithms even when they have different names
-        this.bfs();
+        this.dfs();
     }
 
     sleep(time) {
@@ -28,24 +28,24 @@ export class BFS {
     getPath() {
         let path = [];
         let prev;
-        prev = this.end_node;
-        while (prev != this.start_node) {
+        prev = this.endNode;
+        while (prev != this.startNode) {
             prev = this.previous_map.get(prev);
             path.push(prev);
         }
 
-        // Removees the start_node so it doesn't get coloured
+        // Removees the startNode so it doesn't get coloured
         // DFS Uses a stack and so uses pop() to remove the last element which is the last added to whilst bfs uses a queue with shift to remove the first added element
         path.pop();
         this.animator.tracePath(path);
     }
 
-    async bfs() {
+    async dfs() {
         let node = null;
-        this.queue.push(this.start_node);
+        this.queue.push(this.startNode);
 
         while (this.queue) {
-            node = this.queue.shift();
+            node = this.queue.pop();
 
             // In order to not animate the start and end nodes
             if (node.start != true && node.end != true) {

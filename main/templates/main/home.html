@@ -7,51 +7,95 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
         <!-- CSS -->
-        <link rel='stylesheet' href="{% static 'main/home.css' %}">
+        <link rel='stylesheet' href="{% static 'main/css/home.css' %}">
     </head>
     <!-- Modals -->
     <!-- Random Maze Generation Modal -->
-    <div class="random-maze-settings-modal modal fade" tabindex="-1">
+    <div class="random-maze-settings-modal modal fade" id="mazeGenerationModal" tabindex="-1">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title">Random maze generation settings</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class='maze-generation-density'>
-                    <label for="customRange2" class="form-label">Generation density</label>
-                    <input type="range" class="generation-density form-range" min="0.1" max="0.9" step="0.1" id="customRange2">
-                    <div class="d-flex">
-                        <button type="button" class="btn btn-outline-info density-input-button">Set density</button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Random maze generation settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class='maze-generation-density'>
+                        <label for="customRange2" class="form-label">Generation density</label>
+                        <input type="range" class="generation-density form-range" min="0.1" max="0.9" step="0.1" id="customRange2">
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-outline-info density-input-button">Set density</button>
+                        </div>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
         </div>
     </div>
-
+    
     <!-- Colour Picker Modal -->
-    <div class="colour-picker-modal modal fade" tabindex="-1">
+    <div class="colour-picker-modal modal fade" id="colourModal" tabindex="-1">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title">Colour picking</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Colour picking</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="colour-category modal-body">
+                    <h6>Start & End Nodes</h6>
+                    <div class="colour-section d-flex navbar-buttons">
+                        <input class="start-colour-input colour-picking-node" type="color" value="#66ffa6">
+                        <p class="colour-section-label">Start Node</p>
+                    </div>
+                    <div class="colour-section d-flex navbar-buttons">
+                        <input class="end-colour-input colour-picking-node" type="color" value="#ff0000">
+                        <p class="colour-section-label">End Node</p>
+                    </div>
+                </div>
+                <div class="colour-category modal-body">
+                    <h6>Walls & Traversed Nodes</h6>
+                    <div class="colour-section d-flex navbar-buttons">
+                        <input class="wall-colour-input colour-picking-node" type="color" value="#000000">
+                        <p class="colour-section-label">Wall Node</p>
+                    </div>
+                    <div class="colour-section d-flex navbar-buttons">
+                        <input class="traversed-colour-input colour-picking-node" type="color" value="#00ffff">
+                        <p class="colour-section-label">Traversed Node</p>
+                    </div>
+                </div>
+                <div class="colour-category modal-body">
+                    <h6>Path Nodes</h6>
+                    <div class="colour-section d-flex navbar-buttons">
+                        <input class="path-colour-input colour-picking-node" type="color" value="#ffff00">
+                        <p class="colour-section-label">Path Node</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="reset-colour-button btn btn-danger" data-bs-dismiss="modal">Reset Colours</button>
+                    <button type="button" class="save-colour-button btn btn-primary" data-bs-dismiss="modal">Save Changes</button>
+                </div>
             </div>
-            <div class="modal-body">
-            ...
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
         </div>
     </div>
+    
+    <!-- Toasts -->
+    <div class="toast-container">
+        <!-- No algorithm Toast -->
+        <div class="no-algorithm-toast toast bottom-0 end-0 position-absolute" id="no-algorithm-toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Choose an algorithm</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Please choose an algorithm in the top left in order to run!
+            </div>
+        </div>
 
+    </div>
+    
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-padding">
@@ -81,7 +125,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div class="d-flex navbar-buttons">
                                     <li class=""><a class="random-maze-generator dropdown-item" href="#">Randomised</a></li>
-                                    <img class="random-maze-settings-icon" src="{% static 'main/images/settings-icon.svg' %}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <img class="random-maze-settings-icon" src="{% static 'main/images/settings-icon.svg' %}" data-bs-toggle="modal" data-bs-target="#mazeGenerationModal">
                                 </div>
                                 <li class="invert-grid"><a class="dropdown-item" href="#">Invert Grid</a></li>
                                 <li><a class="dropdown-item" href="#">Another</a></li>
@@ -89,11 +133,11 @@
                         </li>
                         <!-- Colour Picker -->
                         <li class="nav-item">
-                            <a class="nav-link colour-picker-input" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Colour Picking</a>
+                            <a class="nav-link colour-picker-input" data-bs-toggle="modal" data-bs-target="#colourModal" href="#">Colour Picking</a>
                         </li>
                     </ul>
                     <div class="d-flex navbar-buttons">
-                        <button type="button" class="visualise btn btn-outline-success visualise-button">Visualise</button>
+                        <button type="button" class="visualise btn btn-outline-success visualise-button" data-bs-toggle="toast" data-bs-target="#no-algorithm-toast">Visualise</button>
                     </div>
                     <div class="d-flex navbar-buttons">
                         <button type="button" class="btn btn-outline-warning clear-path-button">Clear Path</button>
@@ -104,10 +148,10 @@
                 </div>
             </div>
         </nav>
-
+        
         <div class='main'>
         </div>
-
+        
         <div class='grid-size-selector'>
             <label for="customRange3" class="form-label">Grid Size</label>
             <input type="range" class="grid-ratio form-range" min="1" max="5" step="1" id="customRange3">
@@ -115,17 +159,18 @@
                 <button type="button" class="btn btn-outline-info grid-size-button">Change</button>
             </div>
         </div>
-
+        
+        
         <!-- JQuery JavaScript -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!-- Bootstrap JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
         <!-- JavaScript -->
-        <script src="{% static 'main/animations.js' %}" type="module"></script>
-        <script src="{% static 'main/algorithms/dijkstra.js' %}" type="module"></script>
-        <script src="{% static 'main/algorithms/dfs.js' %}" type="module"></script>
-        <script src="{% static 'main/algorithms/bfs.js' %}" type="module"></script>
-        <script src="{% static 'main/home.js' %}" type="module"></script>
-        <script src="{% static 'main/modals.js' %}"></script>
+        <script src="{% static 'main/js/main.js' %}" type="module"></script>
+        <script src="{% static 'main/js/animations.js' %}" type="module"></script>
+        <script src="{% static 'main/js/algorithms/dijkstra.js' %}" type="module"></script>
+        <script src="{% static 'main/js/algorithms/dfs.js' %}" type="module"></script>
+        <script src="{% static 'main/js/algorithms/bfs.js' %}" type="module"></script>
+        <script src="{% static 'main/js/home.js' %}" type="module"></script>
     </body>
 </html>
