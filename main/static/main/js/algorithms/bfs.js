@@ -34,7 +34,7 @@ export class BFS {
             path.push(prev);
         }
 
-        // Removees the startNode so it doesn't get coloured
+        // Removes the startNode so it doesn't get coloured
         // DFS Uses a stack and so uses pop() to remove the last element which is the last added to whilst bfs uses a queue with shift to remove the first added element
         path.pop();
         this.animator.tracePath(path);
@@ -67,8 +67,6 @@ export class BFS {
 
             await this.sleep(10);
             // Node not found function, pop up on bottom right with info
-        }
-
-        console.log("finished");    
+        }   
     }
 }

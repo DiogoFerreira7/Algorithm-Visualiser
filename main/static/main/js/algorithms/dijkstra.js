@@ -18,6 +18,7 @@ export class Dijkstra {
     }
     
     async dijkstra() {
+        
 
         await this.sleep(10);
     }

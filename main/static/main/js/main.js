@@ -10,6 +10,8 @@ export class Node {
         this.traversed = false;
         this.path = false;
         this.neighbours = [];
+        this.f_cost = Infinity;
+        this.g_cost = Infinity;
         this.div = $(`.row-${this.row}-column-${this.column}`);
     }
 }

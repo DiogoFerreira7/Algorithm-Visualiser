@@ -1,6 +1,7 @@
 import {Grid} from './main.js';
 import {BFS} from './algorithms/bfs.js';
 import {DFS} from './algorithms/dfs.js';
+import {AStar} from './algorithms/astar.js';
 // import {Dijkstra} from './algorithms/dijkstra.js';
 
 $(document).ready(function() {
@@ -13,9 +14,9 @@ $(document).ready(function() {
     gridEditor(grid);
     
     // Algorithms
-    $(".dijkstra").click(function() {
-        choice = "dijkstra";
-        $(".visualise").html("Run Dijkstra");
+    $(".astar").click(function() {
+        choice = "astar";
+        $(".visualise").html("Run A*");
     })
     
     $(".bfs").click(function() {
@@ -31,6 +32,10 @@ $(document).ready(function() {
     $(".visualise").click(function() {
         let algorithm;
         switch(choice) {
+            case "astar":        
+                algorithm = new AStar(grid);
+                algorithm.visualise();
+                break;
             case "bfs":
                 algorithm = new BFS(grid);
                 algorithm.visualise();
@@ -39,18 +44,10 @@ $(document).ready(function() {
                 algorithm = new DFS(grid);
                 algorithm.visualise();
                 break;
-            case "dijkstra":        
-                console.log("not working yet");
-                // algorithm = new Dijkstra(grid);
-                // algorithm.visualise();
-                break;
             default:
                 console.log("no algorithm picked, pop over activated");
                 $(".no-algorithm-toast").toast("show");
-                // fix toast
-                // bootstrap.Toast($("no-algorithm-toast"));
-                break;
-                
+                break;    
         }
     })
     
@@ -69,7 +66,7 @@ $(document).ready(function() {
     });
     
     // Controls
-    $(".clear-grid-button").click(function() {
+    $(".clear-grid-button").click(function() {666
         grid.clearGrid();
     });
     
