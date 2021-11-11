@@ -67,6 +67,9 @@ export class BFS {
 
             await this.sleep(10);
             // Node not found function, pop up on bottom right with info
-        }   
+        }
+        
+        // algorithm finished running with no path available 
+        
     }
 }

@@ -44,15 +44,13 @@ export class AStar {
     }
 
     sort_nodes() {
-        console.log(this.nodes_to_traverse, "yes");
         this.nodes_to_traverse.sort((node1, node2) => {
-            if (node1.f_cost > node2.f_cost) {
+            if (node1.h_cost > node2.h_cost) {
                 return 1;
             } else {
                 return -1;
             }
         });
-        console.log(this.nodes_to_traverse);
     }
 
     async astar() {
@@ -65,7 +63,6 @@ export class AStar {
             // check if +1 makes a difference
             this.sort_nodes();
             node = this.nodes_to_traverse.shift();
-            console.log(node);
 
             if (node.end === true) {
                 this.getPath();
@@ -81,11 +78,11 @@ export class AStar {
                     }
 
                     // Calculate the heuristic cost of the node
-                    let h_cost = this.heuristic(neighbour);
+                    neighbour.h_cost = this.heuristic(neighbour);
                     // If the total cost of the new path is lesser than the previously set path
-                    if (1 + node.g_cost + h_cost < neighbour.f_cost) {
+                    if (1 + node.g_cost + neighbour.h_cost < neighbour.f_cost) {
                         neighbour.g_cost = 1 + node.g_cost;
-                        neighbour.f_cost = neighbour.g_cost + h_cost;
+                        neighbour.f_cost = neighbour.g_cost + neighbour.h_cost;
                     }
                     // append each node to the list and just make it so when picking a new node you just choose which one has the shortest f value
                     this.updatePath(neighbour);

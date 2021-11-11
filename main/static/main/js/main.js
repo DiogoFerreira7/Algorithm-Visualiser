@@ -12,6 +12,7 @@ export class Node {
         this.neighbours = [];
         this.f_cost = Infinity;
         this.g_cost = Infinity;
+        this.h_cost = Infinity;
         this.div = $(`.row-${this.row}-column-${this.column}`);
     }
 }

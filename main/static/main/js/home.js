@@ -29,7 +29,12 @@ $(document).ready(function() {
         $(".visualise").html("Run DFS");
     })
     
+    // When run algorithm is ran
     $(".visualise").click(function() {
+        // Removes all event handlers from the website when being ran
+        // $("*").off();
+        console.log("turned off event listeners")
+
         let algorithm;
         switch(choice) {
             case "astar":        
@@ -45,10 +50,13 @@ $(document).ready(function() {
                 algorithm.visualise();
                 break;
             default:
-                console.log("no algorithm picked, pop over activated");
                 $(".no-algorithm-toast").toast("show");
-                break;    
+                break;
         }
+
+        // Algorithms finished running so we turn them back on
+        console.log("turning back on event listeners");
+        // gridEditor(grid);
     })
     
     // Maze Generation

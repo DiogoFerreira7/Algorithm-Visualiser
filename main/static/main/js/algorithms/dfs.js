@@ -51,6 +51,7 @@ export class DFS {
             if (node.start != true && node.end != true) {
                 this.animator.setTraversed(node);
             }
+            
             if (node.end === true) {
                 this.getPath();
                 break;
