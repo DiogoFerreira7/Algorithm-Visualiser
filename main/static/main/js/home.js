@@ -32,31 +32,27 @@ $(document).ready(function() {
     // When run algorithm is ran
     $(".visualise").click(function() {
         // Removes all event handlers from the website when being ran
-        // $("*").off();
-        console.log("turned off event listeners")
-
-        let algorithm;
-        switch(choice) {
-            case "astar":        
-                algorithm = new AStar(grid);
-                algorithm.visualise();
-                break;
-            case "bfs":
-                algorithm = new BFS(grid);
-                algorithm.visualise();
-                break;
-            case "dfs":
-                algorithm = new DFS(grid);
-                algorithm.visualise();
-                break;
-            default:
-                $(".no-algorithm-toast").toast("show");
-                break;
+        if (choice === null) {
+            $(".no-algorithm-toast").toast("show");
+        } else {
+            console.log("turned off event listeners");
+            let algorithm;
+            switch(choice) {
+                case "astar":        
+                    algorithm = new AStar(grid);
+                    algorithm.visualise();
+                    break;
+                case "bfs":
+                    algorithm = new BFS(grid);
+                    algorithm.visualise();
+                    break;
+                case "dfs":
+                    algorithm = new DFS(grid);
+                    algorithm.visualise();
+                    break;
+                }
+            console.log("turning back on event listeners");
         }
-
-        // Algorithms finished running so we turn them back on
-        console.log("turning back on event listeners");
-        // gridEditor(grid);
     })
     
     // Maze Generation
@@ -74,7 +70,7 @@ $(document).ready(function() {
     });
     
     // Controls
-    $(".clear-grid-button").click(function() {666
+    $(".clear-grid-button").click(function() {
         grid.clearGrid();
     });
     
@@ -122,6 +118,7 @@ $(document).ready(function() {
 });
 
 function gridEditor(grid) {
+    console.log("event listeners activated");
     // Mouse Event Listeners
     let mouseIsDown = false
     let startIsDragging = false

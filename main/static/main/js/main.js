@@ -62,7 +62,6 @@ export class Grid {
                 this.getNeighbours(this.board[i][j]);
             }
         }
-
     }
 
     setStart(newNode, originalNode = null) {
@@ -110,9 +109,10 @@ export class Grid {
     }
 
     randomGridGenerator() {
+        let density_weight = 0.75;
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {
-                if (Math.random() < this.randomGenerationDensity) {
+                if (Math.random() < (this.randomGenerationDensity * density_weight)) {
                     this.animator.changeToWall(this.board[i][j]);
                 }
             }
