@@ -44,7 +44,7 @@ export class BFS {
         let node = null;
         this.queue.push(this.startNode);
 
-        while (this.queue) {
+        while (this.queue.length > 0) {
             node = this.queue.shift();
 
             // In order to not animate the start and end nodes
@@ -53,7 +53,7 @@ export class BFS {
             }
             if (node.end === true) {
                 this.getPath();
-                break;
+                return 0;
             }
 
             this.previous_node = node;
@@ -66,10 +66,9 @@ export class BFS {
             });
 
             await this.sleep(10);
-            // Node not found function, pop up on bottom right with info
         }
         
-        // algorithm finished running with no path available 
-        
+        // algorithm finished running with no path available
+        $(".no-path-toast").toast("show");
     }
 }

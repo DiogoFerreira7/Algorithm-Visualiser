@@ -35,7 +35,6 @@ $(document).ready(function() {
         if (choice === null) {
             $(".no-algorithm-toast").toast("show");
         } else {
-            console.log("turned off event listeners");
             let algorithm;
             switch(choice) {
                 case "astar":        
@@ -50,8 +49,7 @@ $(document).ready(function() {
                     algorithm = new DFS(grid);
                     algorithm.visualise();
                     break;
-                }
-            console.log("turning back on event listeners");
+            }
         }
     })
     
@@ -71,7 +69,7 @@ $(document).ready(function() {
     
     // Controls
     $(".clear-grid-button").click(function() {
-        grid.clearGrid();
+        // Set the new colours 
     });
     
     $(".clear-path-button").click(function() {
@@ -98,27 +96,23 @@ $(document).ready(function() {
 
     $(".save-colour-button").click(function() {
         // Creates a new grid when there
-        grid.clearGrid();
+        grid.animator.changeColours();
+        grid.recolourGrid();
     })
 
     $(".reset-colour-button").click(function() {
-        // just set them back to the original values
-        grid.animator.startNodeColour = "#66ffa6";
-        grid.animator.endNodeColour = "ff0000";
-        grid.animator.wallNodeColour = "000000";
-        grid.animator.traversedNodeColour = "#00ffff";
-        grid.animator.pathNodeColour = "ffff00";
+        grid.animator.resetColours();
+        grid.recolourGrid();
         // Change values of the actual html back to originals
-        $(".start-colour-input").val() = "#66ffa6";
-        $(".end-colour-input").val() = "ff0000";
-        $(".wall-colour-input").val() = "000000";
-        $(".traversed-colour-input").val() = "#00ffff";
-        $(".path-colour-input").val() = "ffff00";
+        $(".start-colour-input").val("#66ffa6");
+        $(".end-colour-input").val("ff0000");
+        $(".wall-colour-input").val("000000");
+        $(".traversed-colour-input").val("#00ffff");
+        $(".path-colour-input").val("ffff00");
     })
 });
 
 function gridEditor(grid) {
-    console.log("event listeners activated");
     // Mouse Event Listeners
     let mouseIsDown = false
     let startIsDragging = false

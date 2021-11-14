@@ -44,7 +44,7 @@ export class DFS {
         let node = null;
         this.queue.push(this.startNode);
 
-        while (this.queue) {
+        while (this.queue.length > 0) {
             node = this.queue.pop();
 
             // In order to not animate the start and end nodes
@@ -54,7 +54,7 @@ export class DFS {
             
             if (node.end === true) {
                 this.getPath();
-                break;
+                return 0;
             }
 
             this.previous_node = node;
@@ -69,5 +69,7 @@ export class DFS {
             await this.sleep(10);
             // Node not found function, pop up on bottom right with info
         }
+
+        $("no-path-toast").toast("show");
     }
 }

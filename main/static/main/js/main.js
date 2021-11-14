@@ -146,6 +146,15 @@ export class Grid {
         }
     }
 
+    recolourGrid() {
+        for (let i = 0; i < this.rowNodes; i++) {
+            for (let j = 0; j < this.columnNodes; j++) {
+                let node = this.board[i][j];
+                this.animator.recolourNode(node);
+            }
+        }
+    }
+
     clearPath() {
         for (let i = 0; i < this.rowNodes; i++ ) {
             for (let j = 0; j < this.columnNodes; j++) {

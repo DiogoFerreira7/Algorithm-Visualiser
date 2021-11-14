@@ -59,14 +59,14 @@ export class AStar {
         this.startNode.g_cost = 0;
         this.startNode.f_cost = 0;
 
-        while (this.nodes_to_traverse) {
+        while (this.nodes_to_traverse.length) {
             // check if +1 makes a difference
             this.sort_nodes();
             node = this.nodes_to_traverse.shift();
 
             if (node.end === true) {
                 this.getPath();
-                break;
+                return 0;
             }
 
             this.previous_node = node;
@@ -91,7 +91,9 @@ export class AStar {
                 }
             });
 
-            await this.sleep(15);
+            await this.sleep(10);
         }
+
+        $(".no-path-toast").toast("show");
     }
 }

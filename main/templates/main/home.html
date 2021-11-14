@@ -81,19 +81,28 @@
     </div>
     
     <!-- Toasts -->
-    <div class="toast-container">
-        <!-- No algorithm Toast -->
-        <div class="no-algorithm-toast toast bottom-0 end-0 position-absolute" id="no-algorithm-toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Choose an algorithm</strong>
-                <small>11 mins ago</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                Please choose an algorithm in the top left in order to run!
-            </div>
+    <!-- No algorithm Toast -->
+    <div class="no-algorithm-toast toast toast-container" id="no-algorithm-toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Choose an algorithm</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-
+        <div class="toast-body">
+            Please choose an algorithm in the top left in order to run!
+        </div>
+    </div>
+    <!-- No path Toast -->
+    <div class="no-path-toast toast toast-container" id="no-path-toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">No Path</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            No path found!
+            Please change the maze to find a new path.
+        </div>
     </div>
     
     <body>

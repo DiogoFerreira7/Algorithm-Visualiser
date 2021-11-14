@@ -2,11 +2,37 @@ export class Animations {
 
     constructor() {
         this.defaultNodeColour = "ffffff";
+        this.changeColours();
+    }
+
+    changeColours() {
         this.startNodeColour = $(".start-colour-input").val();
         this.endNodeColour = $(".end-colour-input").val();
         this.wallNodeColour = $(".wall-colour-input").val();
         this.traversedNodeColour = $(".traversed-colour-input").val();
         this.pathNodeColour = $(".path-colour-input").val()
+    }
+
+    recolourNode(node) {
+        if (node.start) {
+            this.setNodeColour(node.div, this.startNodeColour);
+        } else if (node.end) {
+            this.setNodeColour(node.div, this.endNodeColour);
+        } else if (node.wall) {
+            this.setNodeColour(node.div, this.wallNodeColour);
+        } else if (node.path) {
+            this.setNodeColour(node.div, this.pathNodeColour);
+        } else if (node.traversed) {
+            this.setNodeColour(node.div, this.traversedNodeColour);
+        }
+    }
+
+    resetColours() {
+        this.startNodeColour = "#66ffa6";
+        this.endNodeColour = "ff0000";
+        this.wallNodeColour = "000000";
+        this.traversedNodeColour = "#00ffff";
+        this.pathNodeColour = "ffff00";
     }
 
     setNodeColour(node, value) {
@@ -30,6 +56,7 @@ export class Animations {
         }
     }
 
+    // Conditions (Set / Remove)
     setStartAnimation(node) {
         node.start = true;
         this.clearNode(node);
