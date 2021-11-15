@@ -69,7 +69,8 @@ $(document).ready(function() {
     
     // Controls
     $(".clear-grid-button").click(function() {
-        // Set the new colours 
+        // Set the new colours
+        grid.clearGrid();
     });
     
     $(".clear-path-button").click(function() {
