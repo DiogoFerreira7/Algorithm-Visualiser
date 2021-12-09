@@ -1,7 +1,7 @@
 export class Animations {
 
     constructor() {
-        this.defaultNodeColour = "ffffff";
+        this.defaultNodeColour = "#ffffff";
         this.changeColours();
     }
 
@@ -29,10 +29,10 @@ export class Animations {
 
     resetColours() {
         this.startNodeColour = "#66ffa6";
-        this.endNodeColour = "ff0000";
-        this.wallNodeColour = "000000";
+        this.endNodeColour = "#ff0000";
+        this.wallNodeColour = "#000000";
         this.traversedNodeColour = "#00ffff";
-        this.pathNodeColour = "ffff00";
+        this.pathNodeColour = "#ffff00";
     }
 
     setNodeColour(node, value) {
@@ -94,6 +94,14 @@ export class Animations {
             node.path = true;
             this.setNodeColour(node.div, this.pathNodeColour);
         })
+    }
+
+    removeGridBorder() {
+        $(".node").css("outline", "none");
+    }
+
+    addGridBorder() {
+        $(".node").css("outline", "1px solid #555");
     }
 
     removePath(node) {

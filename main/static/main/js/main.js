@@ -29,6 +29,7 @@ export class Grid {
         this.startNode = null;
         this.endNode = null;
         this.animator = new Animations();
+        this.gridBorder = true;
         this.randomGenerationDensity = 0.5;
     }
 

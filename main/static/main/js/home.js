@@ -2,6 +2,7 @@ import {Grid} from './main.js';
 import {BFS} from './algorithms/bfs.js';
 import {DFS} from './algorithms/dfs.js';
 import {AStar} from './algorithms/astar.js';
+import {Greedy} from './algorithms/greedy.js';
 // import {Dijkstra} from './algorithms/dijkstra.js';
 
 $(document).ready(function() {
@@ -17,6 +18,11 @@ $(document).ready(function() {
     $(".astar").click(function() {
         choice = "astar";
         $(".visualise").html("Run A*");
+    })
+
+    $(".greedy").click(function() {
+        choice = "greedy";
+        $(".visualise").html("Run Greedy A*");
     })
     
     $(".bfs").click(function() {
@@ -47,6 +53,10 @@ $(document).ready(function() {
                     break;
                 case "dfs":
                     algorithm = new DFS(grid);
+                    algorithm.visualise();
+                    break;
+                case "greedy":
+                    algorithm = new Greedy(grid);
                     algorithm.visualise();
                     break;
             }
@@ -87,10 +97,22 @@ $(document).ready(function() {
         }
     });
 
+    $(".grid-border-button").click(function() {
+        if (grid.gridBorder) {
+            grid.animator.removeGridBorder();
+            grid.gridBorder = false;
+        } else {
+            grid.animator.addGridBorder();
+            grid.gridBorder = true;
+        }
+    });
+
+    // Settings Inputs
     $(".random-maze-settings-icon").click(function() {
         $(".random-maze-settings-modal").modal("show");
     });
     
+    // Modals for Colour
     $(".colour-picker-input").click(function() {
         $(".colour-picker-modal").modal("show");
     });
@@ -106,10 +128,10 @@ $(document).ready(function() {
         grid.recolourGrid();
         // Change values of the actual html back to originals
         $(".start-colour-input").val("#66ffa6");
-        $(".end-colour-input").val("ff0000");
-        $(".wall-colour-input").val("000000");
+        $(".end-colour-input").val("#ff0000");
+        $(".wall-colour-input").val("#000000");
         $(".traversed-colour-input").val("#00ffff");
-        $(".path-colour-input").val("ffff00");
+        $(".path-colour-input").val("#ffff00");
     })
 });
 
