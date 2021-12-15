@@ -46,7 +46,7 @@ export class BFS {
 
         while (this.queue.length > 0) {
             node = this.queue.shift();
-
+            
             // In order to not animate the start and end nodes
             if (node.start != true && node.end != true) {
                 this.animator.setTraversed(node);

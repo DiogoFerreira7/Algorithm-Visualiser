@@ -3,23 +3,25 @@ import {BFS} from './algorithms/bfs.js';
 import {DFS} from './algorithms/dfs.js';
 import {AStar} from './algorithms/astar.js';
 import {Greedy} from './algorithms/greedy.js';
-// import {Dijkstra} from './algorithms/dijkstra.js';
+import {Dijkstra} from './algorithms/dijkstra.js';
+import {MazeGenerator} from './algorithms/mazeGeneration.js';
 
 $(document).ready(function() {
     // Grid Initialisation
     let grid = new Grid($(".grid-ratio").val());
+    // Maze Generator Initialisation
+    let mazeGenerator = new MazeGenerator(grid);
     var choice = null;
     grid.createGrid();
-    
+
     // Mouse Event Listeners
     gridEditor(grid);
     
-    // Algorithms
     $(".astar").click(function() {
         choice = "astar";
         $(".visualise").html("Run A*");
     })
-
+    
     $(".greedy").click(function() {
         choice = "greedy";
         $(".visualise").html("Run Greedy A*");
@@ -28,6 +30,11 @@ $(document).ready(function() {
     $(".bfs").click(function() {
         choice = "bfs";
         $(".visualise").html("Run BFS");
+    })
+    
+    $(".dijkstra").click(function() {
+        choice = "dijkstra";
+        $(".visualise").html("Run Dijkstra");
     })
     
     $(".dfs").click(function() {
@@ -59,23 +66,33 @@ $(document).ready(function() {
                     algorithm = new Greedy(grid);
                     algorithm.visualise();
                     break;
+                case "dijkstra":
+                    algorithm = new Dijkstra(grid);
+                    algorithm.visualise();
+                    break;
             }
         }
     })
-    
+
     // Maze Generation
+
     $(".random-maze-generator").click(function() {
         grid.clearGrid();
-        grid.randomGridGenerator();
+        mazeGenerator.randomGridGenerator();
     });
     
     $(".density-input-button").click(function() {
-        grid.randomGenerationDensity = $(".generation-density").val();
-    })
+        mazeGenerator.randomGenerationDensity = $(".generation-density").val();
+    });
     
     $(".invert-grid").click(function() {
-        grid.invertGrid();
+        mazeGenerator.invertGrid();
     });
+    
+    $(".recursive-maze-generator").click(function() {
+        grid.clearGrid();
+        mazeGenerator.recursiveGridGenerator();
+    })
     
     // Controls
     $(".clear-grid-button").click(function() {
@@ -94,6 +111,7 @@ $(document).ready(function() {
             grid = new Grid(gridRatio);
             grid.createGrid();
             gridEditor(grid);
+            mazeGenerator = new MazeGenerator(grid);
         }
     });
 
@@ -134,7 +152,7 @@ $(document).ready(function() {
         $(".path-colour-input").val("#ffff00");
     })
 });
-
+    
 function gridEditor(grid) {
     // Mouse Event Listeners
     let mouseIsDown = false
@@ -169,5 +187,4 @@ function gridEditor(grid) {
             grid.animator.changeToWall(grid.getNode(this));
         }
     })
-
 }

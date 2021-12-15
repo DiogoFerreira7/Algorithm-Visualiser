@@ -63,7 +63,7 @@ export class AStar {
         // While there are still nodes to search
         while (this.nodes_to_traverse.length) {
             // Sort nodes according to their f_cost
-            // this.sort_nodes();
+            this.sort_nodes();
             // Get the first node which has the lowest f_cost
             node = this.nodes_to_traverse.shift();
 
@@ -83,13 +83,13 @@ export class AStar {
                         this.animator.setTraversed(neighbour);
                     }
 
-                    // // Calculates the heuristic
-                    // neighbour.h_cost = this.heuristic(neighbour);
-                    // // If the new g_cost to the neighbours is less than their previous update their g_cost and f_cost so that if a new path is found we discovered it
-                    // if (1 + node.g_cost < neighbour.g_cost) {
-                    //     neighbour.g_cost = 1 + node.g_cost;
-                    //     neighbour.f_cost = neighbour.g_cost + neighbour.h_cost;
-                    // }
+                    // Calculates the heuristic
+                    neighbour.h_cost = this.heuristic(neighbour);
+                    // If the new g_cost to the neighbours is less than their previous update their g_cost and f_cost so that if a new path is found we discovered it
+                    if (1 + node.g_cost < neighbour.g_cost) {
+                        neighbour.g_cost = 1 + node.g_cost;
+                        neighbour.f_cost = neighbour.g_cost + neighbour.h_cost;
+                    }
 
                     // append each node to the list and just make it so when picking a new node you just choose which one has the shortest f value
                     this.updatePath(neighbour);

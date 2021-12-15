@@ -30,7 +30,6 @@ export class Grid {
         this.endNode = null;
         this.animator = new Animations();
         this.gridBorder = true;
-        this.randomGenerationDensity = 0.5;
     }
 
     createGrid() {
@@ -106,25 +105,6 @@ export class Grid {
         if (node.column != 0) {
             let nodeLeft = this.board[node.row][node.column-1];
                 node.neighbours.push(nodeLeft);
-        }
-    }
-
-    randomGridGenerator() {
-        let density_weight = 0.75;
-        for (let i = 0; i < this.rowNodes; i++ ) {
-            for (let j = 0; j < this.columnNodes; j++) {
-                if (Math.random() < (this.randomGenerationDensity * density_weight)) {
-                    this.animator.changeToWall(this.board[i][j]);
-                }
-            }
-        }
-    }
-
-    invertGrid() {
-        for (let i = 0; i < this.rowNodes; i++ ) {
-            for (let j = 0; j < this.columnNodes; j++) {
-                this.animator.changeToWall(this.board[i][j]);
-            }
         }
     }
 
