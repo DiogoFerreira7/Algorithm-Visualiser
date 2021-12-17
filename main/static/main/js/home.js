@@ -129,6 +129,18 @@ $(document).ready(function() {
     $(".random-maze-settings-icon").click(function() {
         $(".random-maze-settings-modal").modal("show");
     });
+
+    // Heuristic Inputs
+    $(".euclidian-heuristic").click(function() {
+        grid.heuristic = "euclidian";
+        console.log("now euclidian");
+    })
+
+    $(".manhattan-heuristic").click(function() {
+        grid.heuristic = "manhattan";
+        console.log("now manhattan");
+    })
+
     
     // Modals for Colour
     $(".colour-picker-input").click(function() {

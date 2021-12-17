@@ -5,6 +5,7 @@ export class AStar {
     constructor(grid) {
         this.animator = new Animations();
         this.grid = grid;
+        this.heuristicType = grid.heuristic;
         this.nodes_to_traverse = []
         this.startNode = grid.startNode;
         this.endNode = grid.endNode;
@@ -40,7 +41,15 @@ export class AStar {
     heuristic(node) {
         let x = Math.abs(node.row - this.endNode.row);
         let y = Math.abs(node.column - this.endNode.column);
-        return x + y
+
+        if (this.heuristicType == "euclidian") {
+            // Euclidian Distance
+            let c = x**2 + y**2
+            return Math.sqrt(c);
+        } else if (this.heuristicType == "manhattan") {
+            // Manhattan Distance
+            return x + y;
+        }
     }
 
     sort_nodes() {
@@ -98,7 +107,7 @@ export class AStar {
                 }
             });
 
-            await this.sleep(10);
+            await this.sleep(0);
         }
 
         $(".no-path-toast").toast("show");
