@@ -14,8 +14,9 @@
 }
 
 .random-maze-settings-icon {
-    width: 32;
-    height: 32;
+    width: 20;
+    height: 20;
+    margin: auto 0;
 }
 
 .colour-picking-node {
@@ -60,3 +61,5 @@
     bottom: 10;
     left: 10;
 }
+
+
