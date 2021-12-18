@@ -10,6 +10,76 @@
         <!-- CSS -->
         <link rel='stylesheet' href="{% static 'main/css/home.css' %}">
     </head>
+
+    <!-- Off Canvas -->
+    <!-- Intro Off Canvas -->
+    <div class="offcanvas show offcanvas-top introOffCanvas" tabindex="-1" id="introOffCanvas" aria-labelledby="introOffCanvasLabel">
+        <div class="justify-content-center offcanvas-header intro-offcanvas-header">
+            <h5 id="offcanvasTopLabel">Algorithm Pathfinder</h5>
+            <h6 class="intro-description">By Diogo</h6>
+            <div class="intro-button">
+                <img class="intro-chevron" src="{% static 'main/images/chevron-double-up.svg' %}" data-bs-dismiss="offcanvas" aria-label="Close">
+            </div>
+        </div>
+    </div>
+
+    <!-- Tutorial Off Canvas -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="tutorialOffCanvas" aria-labelledby="tutorialOffCanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tutorialOffCanvasLabel">How to</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <h6 class="offcanvas-title" id="tutorialOffCanvasLabel">Algorithms</h6>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                    Algorithms
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#">Breadth-First Search</a></li>
+                    <li><a class="dropdown-item" href="#">Depth-First Search</a></li>
+                    <li><a class="dropdown-item" href="#">Dijkstra</a></li>
+                    <li><a class="dropdown-item" href="#">A*</a></li>
+                    <li><a class="dropdown-item" href="#">Greedy A*</a></li>
+                </ul>
+                <div class="offcanvas-description">
+                    <p><b>BFS</b> (unweighted) - is a traversal algorithm which searches all nodes within a given layer, Breadth-First Search will always guarentee the shortest path however tends to be the slower algorithm as it will search all possible combinations until that point.</p>
+                    <p><b>DFS</b> (unweighted) - is a traversal algorithm which searches all nodes within a given branch, Depth-First Search will not guarentee the shortest path and its time complexity can be varied.</p>
+                    <p><b>Dijkstra</b> (weighted) - guarentees the shortest path in a weighted graph by calculating the shortest distance to any node around it, once it is calculated for all nodes in the graph it will be able to backtrack to find the shortest path.</p>
+                    <p><b>A*</b> (weighted) - an algoritm which takes on Dijkstra's approach but uses a heuristic to find the best combination of cost - time. It will take the node with the lowest calculated f-value (node cost + heuristic cost).</p> 
+                    <p><b>Greedy A*</b> (weighted) - a variation of A* which instead of taking the node with the smallest f-value, it will simply decide the node it takes via the lowest calculated heuristic to the end node.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="offcanvas-body">
+        <h6 class="offcanvas-title" id="tutorialOffCanvasLabel">Heuristics</h6>
+        <div class="dropdown mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                Heuristics
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="#">Euclidian</a></li>
+                <li><a class="dropdown-item" href="#">Manhattan</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="offcanvas-body">
+        <h6 class="offcanvas-title" id="tutorialOffCanvasLabel">Maze Generation</h6>
+        <div class="dropdown mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                Maze Generation
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="#">Randomised</a></li>
+                <li><a class="dropdown-item" href="#">Recursive</a></li>
+                <li><a class="dropdown-item" href="#">Invert Grid</a></li>
+            </ul>
+        </div>
+    </div> -->
+
     <!-- Modals -->
     <!-- Random Maze Generation Modal -->
     <div class="random-maze-settings-modal modal fade" id="mazeGenerationModal" tabindex="-1">
@@ -127,6 +197,7 @@
                                 <li><a class="dijkstra dropdown-item" href="#">Dijkstra</a></li>
                                 <li><a class="astar dropdown-item" href="#">A*</a></li>
                                 <li><a class="greedy dropdown-item" href="#">Greedy A*</a></li>
+                                <img class="dropdown-item help-icon" data-bs-toggle="offcanvas" data-bs-target="#tutorialOffCanvas" aria-controls="tutorialOffCanvas" src="{% static 'main/images/info-circle.svg' %}">
                             </ul>
                         </li>
                         <!-- Heuristic -->
@@ -157,9 +228,6 @@
                         <li class="nav-item">
                             <a class="nav-link colour-picker-input" data-bs-toggle="modal" data-bs-target="#colourModal" href="#">Colour Picking</a>
                         </li>
-                        <button class="btn btn-primary d-flex navbar-buttons tutorial-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#tutorialOffCanvas" aria-controls="tutorialOffCanvas">
-                            Tutorial
-                        </button>
                     </ul>
                     <div class="d-flex navbar-buttons">
                         <button type="button" class="visualise btn btn-outline-success visualise-button" data-bs-toggle="toast" data-bs-target="#no-algorithm-toast">Visualise</button>
@@ -176,41 +244,6 @@
                 </div>
             </div>
         </nav>
-
-        <!-- Off Canvas -->
-        <!-- Intro Off Canvas -->
-        <div class="offcanvas show offcanvas-top introOffCanvas" tabindex="-1" id="introOffCanvas" aria-labelledby="introOffCanvasLabel">
-            <div class="justify-content-center offcanvas-header">
-                <h5 id="offcanvasTopLabel">Algorithm Pathfinder</h5>
-                <h6 class="intro-description">By Diogo</h6>
-                <div class="intro-button">
-                    <img class="intro-chevron" src="{% static 'main/images/chevron-double-up.svg' %}" data-bs-dismiss="offcanvas" aria-label="Close">
-                </div>
-            </div>
-        </div>
-
-        <!-- Tutorial Off Canvas -->
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="tutorialOffCanvas" aria-labelledby="tutorialOffCanvasLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="tutorialOffCanvasLabel">Offcanvas</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div>
-                    Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-                </div>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                        Dropdown button
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
         
         <div class='main'>
         </div>

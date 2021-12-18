@@ -4,9 +4,12 @@
     height: 100%;
     width: 100%;
     background-image: url("../images/intro-offcanvas-background2.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100vw 100vh;
 }
 
-.offcanvas-header {
+.intro-offcanvas-header {
     display: flex;
     margin: 44vh auto;
 }
@@ -27,6 +30,12 @@
     width: 20px;
     height: 20px;
     fill: white;
+}
+
+/* Off Canvas */
+
+.offcanvas-description {
+    margin-top: 20px;
 }
 
 /* Navbar */
@@ -67,10 +76,9 @@
 
 /* Buttons */
 
-.tutorial-button {
-    padding: .375rem .75rem;
-    width: 80px;
-    margin-left: 8px;
+.help-icon {
+    width: 50px;
+    height: 50px;
 }
 
 /* Grid Code Below (Make a template with CSS above later) */
