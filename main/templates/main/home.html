@@ -157,7 +157,7 @@
                         <li class="nav-item">
                             <a class="nav-link colour-picker-input" data-bs-toggle="modal" data-bs-target="#colourModal" href="#">Colour Picking</a>
                         </li>
-                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#tutorialOffCanvas" aria-controls="tutorialOffCanvas">
+                        <button class="btn btn-primary d-flex navbar-buttons tutorial-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#tutorialOffCanvas" aria-controls="tutorialOffCanvas">
                             Tutorial
                         </button>
                     </ul>
@@ -178,6 +178,17 @@
         </nav>
 
         <!-- Off Canvas -->
+        <!-- Intro Off Canvas -->
+        <div class="offcanvas show offcanvas-top introOffCanvas" tabindex="-1" id="introOffCanvas" aria-labelledby="introOffCanvasLabel">
+            <div class="justify-content-center offcanvas-header">
+                <h5 id="offcanvasTopLabel">Algorithm Pathfinder</h5>
+                <h6 class="intro-description">By Diogo</h6>
+                <div class="intro-button">
+                    <img class="intro-chevron" src="{% static 'main/images/chevron-double-up.svg' %}" data-bs-dismiss="offcanvas" aria-label="Close">
+                </div>
+            </div>
+        </div>
+
         <!-- Tutorial Off Canvas -->
         <div class="offcanvas offcanvas-start" tabindex="-1" id="tutorialOffCanvas" aria-labelledby="tutorialOffCanvasLabel">
             <div class="offcanvas-header">

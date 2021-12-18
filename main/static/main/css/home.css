@@ -1,3 +1,34 @@
+/* Intro Off Canvas */
+
+.introOffCanvas {
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/intro-offcanvas-background2.jpg");
+}
+
+.offcanvas-header {
+    display: flex;
+    margin: 44vh auto;
+}
+
+.intro-description {
+    position: absolute;
+    top: 50vh;
+    left: 48vw;
+}
+
+.intro-button {
+    position: absolute;
+    top: 80vh;
+    left: 49vw;
+}
+
+.intro-chevron {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
 /* Navbar */
 
 .navbar-brand {
@@ -32,6 +63,14 @@
 
 .colour-section-label {
     margin: auto 2vw;
+}
+
+/* Buttons */
+
+.tutorial-button {
+    padding: .375rem .75rem;
+    width: 80px;
+    margin-left: 8px;
 }
 
 /* Grid Code Below (Make a template with CSS above later) */
