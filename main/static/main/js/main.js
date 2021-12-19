@@ -30,7 +30,7 @@ export class Grid {
         this.endNode = null;
         this.animator = new Animations();
         this.gridBorder = true;
-        this.heuristic = "euclidian";
+        this.heuristic = "euclidean";
     }
 
     createGrid() {

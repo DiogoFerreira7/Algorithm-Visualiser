@@ -77,8 +77,10 @@
 /* Buttons */
 
 .help-icon {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    margin-left: 10px;
 }
 
 /* Grid Code Below (Make a template with CSS above later) */

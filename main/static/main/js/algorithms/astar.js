@@ -42,8 +42,8 @@ export class AStar {
         let x = Math.abs(node.row - this.endNode.row);
         let y = Math.abs(node.column - this.endNode.column);
 
-        if (this.heuristicType == "euclidian") {
-            // Euclidian Distance
+        if (this.heuristicType == "euclidean") {
+            // Euclidean Distance
             let c = x**2 + y**2
             return Math.sqrt(c);
         } else if (this.heuristicType == "manhattan") {

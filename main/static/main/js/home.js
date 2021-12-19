@@ -131,9 +131,9 @@ $(document).ready(function() {
     });
 
     // Heuristic Inputs
-    $(".euclidian-heuristic").click(function() {
-        grid.heuristic = "euclidian";
-        console.log("now euclidian");
+    $(".euclidean-heuristic").click(function() {
+        grid.heuristic = "euclidean";
+        console.log("now euclidean");
     })
 
     $(".manhattan-heuristic").click(function() {

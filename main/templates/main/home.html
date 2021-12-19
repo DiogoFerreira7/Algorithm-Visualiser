@@ -53,19 +53,29 @@
         </div>
     </div>
 
-
-    <!-- <div class="offcanvas-body">
-        <h6 class="offcanvas-title" id="tutorialOffCanvasLabel">Heuristics</h6>
-        <div class="dropdown mt-3">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                Heuristics
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="#">Euclidian</a></li>
-                <li><a class="dropdown-item" href="#">Manhattan</a></li>
-            </ul>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="heuristicsOffCanvas" aria-labelledby="heuristicsOffCanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="heuristicsOffCanvasLabel">How to</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <h6 class="offcanvas-title" id="tutorialOffCanvasLabel">Heuristics</h6>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                    Heuristics
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#">Euclidean</a></li>
+                    <li><a class="dropdown-item" href="#">Manhattan</a></li>
+                </ul>
+                <div class="offcanvas-description">
+                    <p><b>Euclidean</b> distance is the root of the squared differences between two coordinates on a grid. In essence it takes the hypoteneuse of a pythagorean triangle and uses it as its approximation (it is good for a diagonal bias).</p>
+                    <p><b>Manhattan</b> distance is the sum of the magnitudes of the coordinate differences (dy + dx) and tends to have a sideways bias taking the A* algorithms into the edges of the grid.</p>
+                </div>
+            </div>
         </div>
     </div>
+    <!--
     <div class="offcanvas-body">
         <h6 class="offcanvas-title" id="tutorialOffCanvasLabel">Maze Generation</h6>
         <div class="dropdown mt-3">
@@ -206,8 +216,9 @@
                                 A* Heuristics
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li class="euclidian-heuristic"><a class="dropdown-item" href="#">Euclidian</a></li>
+                                <li class="euclidean-heuristic"><a class="dropdown-item" href="#">Euclidean</a></li>
                                 <li class="manhattan-heuristic"><a class="dropdown-item" href="#">Manhattan</a></li>
+                                <img class="dropdown-item help-icon" data-bs-toggle="offcanvas" data-bs-target="#heuristicsOffCanvas" aria-controls="heuristicsOffCanvas" src="{% static 'main/images/info-circle.svg' %}">
                             </ul>
                         </li>
                         <!-- Maze Generation -->
