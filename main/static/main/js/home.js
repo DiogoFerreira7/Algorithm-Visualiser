@@ -105,10 +105,15 @@ $(document).ready(function() {
     });
     
     $(".grid-size-button").click(function() {
+        // We get the new slider value they want to change the grid to use for its generation
         let gridRatio = $(".grid-ratio").val();
+        // As long as the value has not remained the same
         if (gridRatio != grid.gridRatio) {
+            // Remove the grid <div> and all nodes inside it
             $(".grid").remove();
+            // set the old grid variable to the new grid with the updated ratio
             grid = new Grid(gridRatio);
+            // Call the createGrid function we created earlier
             grid.createGrid();
             gridEditor(grid);
             mazeGenerator = new MazeGenerator(grid);
